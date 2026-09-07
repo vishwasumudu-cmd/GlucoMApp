@@ -1,0 +1,15 @@
+diff --git a/node_modules/react-native-usb-serialport/android/src/main/java/com/melihyarikkaya/rnserialport/RNSerialportModule.java b/node_modules/react-native-usb-serialport/android/src/main/java/com/melihyarikkaya/rnserialport/RNSerialportModule.java
+index 28e83be..98c47fe 100684
+--- a/node_modules/react-native-usb-serialport/android/src/main/java/com/melihyarikkaya/rnserialport/RNSerialportModule.java
++++ b/node_modules/react-native-usb-serialport/android/src/main/java/com/melihyarikkaya/rnserialport/RNSerialportModule.java
+@@ -227,5 +227,9 @@
+     filter.addAction(ACTION_USB_PERMISSION);
+     filter.addAction(ACTION_USB_ATTACHED);
+     filter.addAction(ACTION_USB_DETACHED);
+-    mReactContext.registerReceiver(mUsbReceiver, filter);
++    if (android.os.Build.VERSION.SDK_INT >= 33) {
++      mReactContext.registerReceiver(mUsbReceiver, filter, Context.RECEIVER_EXPORTED);
++    } else {
++      mReactContext.registerReceiver(mUsbReceiver, filter);
++    }
+   }

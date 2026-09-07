@@ -1,0 +1,86 @@
+diff --git a/node_modules/react-native-serialport/android/build.gradle b/node_modules/react-native-serialport/android/build.gradle
+--- a/node_modules/react-native-serialport/android/build.gradle
++++ b/node_modules/react-native-serialport/android/build.gradle
+@@ -2,7 +2,7 @@
+ buildscript {
+     repositories {
+         google()
+-        jcenter()
++        mavenCentral()
+     }
+ 
+     dependencies {
+diff --git a/node_modules/react-native-serialport/index.js b/node_modules/react-native-serialport/index.js
+--- a/node_modules/react-native-serialport/index.js
++++ b/node_modules/react-native-serialport/index.js
+@@ -1,6 +1,12 @@
+ import { NativeModules } from 'react-native';
+ 
+-const { RNSerialport } = NativeModules;
++let RNSerialport = null;
++try {
++  RNSerialport = NativeModules.RNSerialport;
++} catch (e) {
++  console.warn('[react-native-serialport] Native module unavailable (TurboModule interop error):', e.message);
++}
++
+ 
+@@ -52,19 +58,21 @@
+   ON_READ_DATA            : 'onReadDataFromPort'
+ };
+ 
+-RNSerialport.intArrayToUtf16 = (intArray) => {
+-  var str = "";
+-  for (var i = 0; i < intArray.length; i++) {
+-    str += String.fromCharCode(intArray[i]);
+-  }
+-  return str;
+-}
+-RNSerialport.hexToUtf16 = (hex) => {
+-  var str = "";
+-  var radix = 16;
+-  for (var i = 0; i < hex.length && hex.substr(i, 2) !== "00"; i += 2) {
+-    str += String.fromCharCode(parseInt(hex.substr(i, 2), radix));
+-  }
+-  return str;
++if (RNSerialport) {
++  RNSerialport.intArrayToUtf16 = (intArray) => {
++    var str = "";
++    for (var i = 0; i < intArray.length; i++) {
++      str += String.fromCharCode(intArray[i]);
++    }
++    return str;
++  }
++  RNSerialport.hexToUtf16 = (hex) => {
++    var str = "";
++    var radix = 16;
++    for (var i = 0; i < hex.length && hex.substr(i, 2) !== "00"; i += 2) {
++      str += String.fromCharCode(parseInt(hex.substr(i, 2), radix));
++    }
++    return str;
++  }
+ }
+ 
+ module.exports = { RNSerialport, definitions, actions };
+\ndiff --git a/node_modules/react-native-serialport/android/src/main/java/com/melihyarikkaya/rnserialport/RNSerialportModule.java b/node_modules/react-native-serialport/android/src/main/java/com/melihyarikkaya/rnserialport/RNSerialportModule.java
+--- a/node_modules/react-native-serialport/android/src/main/java/com/melihyarikkaya/rnserialport/RNSerialportModule.java
++++ b/node_modules/react-native-serialport/android/src/main/java/com/melihyarikkaya/rnserialport/RNSerialportModule.java
+@@ -382,11 +382,15 @@
+   @ReactMethod
+-  public void writeBytes(byte[] bytes) {
++  public void writeBytes(com.facebook.react.bridge.ReadableArray bytesArray) {
+     if(!usbServiceStarted){
+       eventEmit(onErrorEvent, createError(Definitions.ERROR_USB_SERVICE_NOT_STARTED, Definitions.ERROR_USB_SERVICE_NOT_STARTED_MESSAGE));
+       return;
+     }
+     if(!serialPortConnected || serialPort == null) {
+       eventEmit(onErrorEvent, createError(Definitions.ERROR_THERE_IS_NO_CONNECTION, Definitions.ERROR_THERE_IS_NO_CONNECTION_MESSAGE));
+       return;
+     }
+-    serialPort.write(bytes);
++    byte[] bytes = new byte[bytesArray.size()];
++    for (int i = 0; i < bytesArray.size(); i++) {
++      bytes[i] = (byte) bytesArray.getInt(i);
++    }
++    serialPort.write(bytes);
+   }\n
