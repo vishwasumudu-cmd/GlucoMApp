@@ -1,84 +1,146 @@
-GlucoMApp 🩸📱
-GlucoMApp is a React Native mobile application designed to help users track, monitor, and manage daily blood glucose levels and personal health metrics efficiently.
+# 🩸 GlucoMApp – Smart Glucose Monitoring System
 
-🌟 Features
-Glucose Level Logging: Easily record blood sugar readings along with timestamps (fasting, pre-meal, post-meal, or bedtime).
+![Status](https://img.shields.io/badge/Status-In%20Development-orange)
+![ESP32](https://img.shields.io/badge/Hardware-ESP32--S3-green)
+![React Native](https://img.shields.io/badge/React%20Native-Expo-blue)
+![Firebase](https://img.shields.io/badge/Database-Firebase-yellow)
 
-Data Visualization: View blood glucose trends over time using interactive charts and logs.
+## 📌 About
 
-Reminders & Alerts: Set custom reminders to test blood sugar levels or take scheduled medications.
+**GlucoMApp** is a smart glucose monitoring and healthcare management system that connects a glucose sensing device with a mobile application.
 
-History & Insights: Access past history with filtering options to track progress over days, weeks, or months.
+The system uses an **ESP32-S3**, **React Native/Expo**, and **Firebase** to collect, process, store, and display glucose data for patients and doctors.
 
-Clean & Simple UI: User-friendly design created for quick daily entries and clear readability.
+## 🎯 Objectives
 
-🛠️ Tech Stack
-Framework: React Native (JavaScript / TypeScript)
+- 🩸 Monitor glucose measurements
+- 🔌 Connect glucose hardware with a mobile device
+- 📱 Develop a user-friendly mobile application
+- 👤 Support Patient and Doctor accounts
+- ☁️ Store glucose records using Firebase
+- 📊 Display glucose history and trends
+- 🔔 Provide abnormal glucose alerts
+- 🔄 Support online/offline data management
 
-Bundler: Metro
+## ✨ Main Features
 
-Target Platforms: Android & iOS
+### 👤 Patient
+- Login & Registration
+- Glucose Dashboard
+- Current Glucose Level
+- Glucose History
+- Trends & Graphs
+- Device Connection Status
 
-Code Quality: ESLint
+### 👨‍⚕️ Doctor
+- Doctor Dashboard
+- Patient List
+- Patient Profiles
+- Glucose History
+- Glucose Trends
+- Abnormal Reading Monitoring
 
-📁 Repository Structure
-Plaintext
+## 🔌 System Architecture
+
+```text
+Glucose Test Strip
+        ↓
+Glucose Sensor Circuit
+        ↓
+     ESP32-S3
+        ↓
+   USB Type-C
+        ↓
+   Mobile App
+        ↓
+     Firebase
+        ↓
+Patient / Doctor
+
+
+🛠️ Technologies
+Hardware
+ESP32-S3
+Glucose Test Strips
+Sensor Interface
+Analog Signal Conditioning
+USB Type-C
+Software
+React Native
+Expo
+TypeScript
+Expo Router
+Firebase Authentication
+Cloud Firestore
+Arduino IDE
+C/C++
+📁 Project Structure
 GlucoMApp/
-├── assets/          # Application images, icons, and fonts
-├── patches/         # Custom module patches
-├── scripts/         # Build and maintenance scripts
-├── src/             # Core application code (components, screens, services)
-├── AGENTS.md        # AI agent instructions and guidelines
-├── CLAUDE.md        # Claude developer notes and workflows
-├── app.json         # React Native app configuration
-├── metro.config.js  # Metro bundler configuration
-└── package.json     # Node dependencies and project scripts
-🚀 Getting Started
-Follow these steps to set up and run the project on your local environment.
-
-Prerequisites
-Ensure you have the following installed on your machine:
-
-Node.js (v18 or higher recommended)
-
-npm or Yarn
-
-React Native development setup (Android Studio for Android / Xcode for iOS)
-
-Installation
-Clone the repository:
-
-Bash
-git clone https://github.com/vishwasumudu-cmd/GlucoMApp.git
+├── src/
+├── assets/
+├── esp32/
+├── hardware/
+├── firebase/
+├── docs/
+├── README.md
+├── package.json
+└── app.json
+🚀 Installation
+git clone YOUR_GITHUB_REPOSITORY_URL
 cd GlucoMApp
-Install dependencies:
-
-Bash
 npm install
-Start the Metro bundler:
+npx expo start
+🔥 Firebase
 
-Bash
-npm start
-Run on Emulator / Device:
+The project uses:
 
-Bash
-# For Android
-npm run android
+Firebase Authentication
+Cloud Firestore
 
-# For iOS (macOS required)
-npm run ios
-🤝 Contributing
-Contributions are always welcome. Feel free to open an issue or submit a pull request:
+Create your Firebase project and configure the Firebase settings before running the application.
 
-Fork the repository.
+⚠️ Do not upload private credentials or service-account JSON files to GitHub.
 
-Create a new branch (git checkout -b feature/YourFeature).
+📊 Data Flow
+Sensor
+  ↓
+ESP32-S3
+  ↓
+Mobile Application
+  ↓
+Data Processing
+  ↓
+Firebase
+  ↓
+Glucose History / Dashboard
+🚧 Project Status
 
-Commit your changes (git commit -m 'Add new feature').
+Currently under development.
 
-Push to the branch (git push origin feature/YourFeature).
+The project is being developed as an academic IoT and healthcare technology project, including mobile application development, ESP32 communication, and glucose sensor integration.
 
-Open a Pull Request.
+🔮 Future Improvements
+Advanced sensor calibration
+Continuous glucose monitoring
+AI-based glucose trend prediction
+Doctor-patient messaging
+Automated alerts
+PDF health reports
+Wearable integration
+⚠️ Medical Disclaimer
+
+GlucoMApp is an academic/research prototype and is not a certified medical device.
+
+Glucose readings should not be used for diagnosis, treatment, or medication decisions. Hardware readings should be validated against a certified glucose meter before clinical use.
+
+🎓 Academic Project
+
+Project: GlucoMApp
+Type: Smart Healthcare / IoT
+Hardware: ESP32-S3
+Mobile: React Native + Expo
+Database: Firebase / Cloud Firestore
 
 📄 License
-This project is licensed under the MIT License.
+
+This project is developed for academic and educational purposes.
